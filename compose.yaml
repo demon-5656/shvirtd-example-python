@@ -42,13 +42,5 @@ services:
       backend:
         ipv4_address: 172.20.0.10
 
-networks:
-  backend:
-    name: backend
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/24
-
 volumes:
   mysql_data:
