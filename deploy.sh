@@ -43,8 +43,14 @@ backup_db() {
   set +a
 
   timestamp="$(date +%Y%m%d-%H%M%S)"
+  network_name="$(docker network ls --format '{{.Name}}' | grep -E '(^backend$|_backend$)' | head -n 1)"
+  if [ -z "${network_name}" ]; then
+    echo "Docker network for the project was not found" >&2
+    exit 1
+  fi
+
   docker run --rm \
-    --network backend \
+    --network "${network_name}" \
     -v "${backup_dir}:/backup" \
     schnitzler/mysqldump \
     --host db \
