@@ -52,6 +52,7 @@ backup_db() {
   docker run --rm \
     --network "${network_name}" \
     -v "${backup_dir}:/backup" \
+    --entrypoint mysqldump \
     schnitzler/mysqldump \
     --host db \
     --user root \
